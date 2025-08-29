@@ -61,7 +61,7 @@ Schedule your PC to shut down, restart, hibernate, or log out after a custom del
 ## Notes
 
 - **Force closing apps may result in loss of unsaved work.** Use this option with caution.
-- The program cannot always detect if Windows updates are pending, but will instruct Windows to install them if selected.
+- The program cannot detect if Windows updates are pending, but will instruct Windows to install them if selected.
 - Works on Windows 7, 8, 8.1, 10, and 11.
 
 ---
