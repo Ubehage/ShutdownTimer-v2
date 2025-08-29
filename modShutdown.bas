@@ -5,6 +5,7 @@ Private Const EWX_SHUTDOWN As Long = &H1
 Private Const EWX_REBOOT As Long = &H2
 Private Const EWX_FORCE As Long = &H4
 Private Const EWX_POWEROFF As Long = &H8
+Private Const EWX_LOGOFF As Long = &H0
 
 Private Const EWX_HIBERNATE As Long = &H20 'Internal only
 
@@ -67,10 +68,15 @@ Public Sub ShutDownNow()
   Dim m As Long
   Call EnableShutdownPrivileges
   m = GetShutdownMethod(o_Method)
-  If o_InstallUpdates = True Then Call InstallAndShutdown(m)
   If m = EWX_HIBERNATE Then
     Call SetSuspendState(True, 0, True)
     Exit Sub
+  End If
+  If o_InstallUpdates = True Then
+    If (m = EWX_POWEROFF Or m = EWX_REBOOT) Then
+      InstallAndShutdown m
+      Exit Sub
+    End If
   End If
   If o_ForceExit Then m = m Or EWX_FORCE
   Call ExitWindowsEx(m, 0&)
@@ -83,6 +89,8 @@ Private Function GetShutdownMethod(ShutdownMethod As Shutdown_Method) As Long
     GetShutdownMethod = EWX_REBOOT
   ElseIf (ShutdownMethod And smHibernate) Then
     GetShutdownMethod = EWX_HIBERNATE
+  ElseIf (ShutdownMethod And smLogOut) Then
+    GetShutdownMethod = EWX_LOGOFF
   End If
 End Function
 
