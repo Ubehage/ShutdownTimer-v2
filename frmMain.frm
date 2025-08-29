@@ -295,7 +295,10 @@ Private Sub EndCountdown()
   wStatus.Visible = False
   txtDelay.Visible = True
   flProgress.Visible = False
-  cmdStart.ButtonStyle = bsGreen
+  With cmdStart
+    .ButtonStyle = bsGreen
+    .Caption = "Start"
+  End With
   IsRunning = False
 End Sub
 
