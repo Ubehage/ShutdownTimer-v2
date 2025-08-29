@@ -1,6 +1,6 @@
 # ShutdownTimer v2
 
-A simple, modern, and **100% portable** shutdown timer for Windows.  
+A simple, lightweight, and **100% portable** shutdown timer for Windows.  
 Schedule your PC to shut down, restart, hibernate, or log out after a custom delay.
 
 ---
