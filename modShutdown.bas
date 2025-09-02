@@ -62,6 +62,9 @@ Private Declare Function ExitWindowsEx Lib "user32" (ByVal dwOptions As Long, By
 Private Declare Function SetSystemPowerState Lib "kernel32" (ByVal fSuspend As Long, ByVal fForce As Long) As Long
 Private Declare Function SetSuspendState Lib "PowrProf" (ByVal bHibernate As Long, ByVal bForce As Long, bWakeUpEventsDisabled) As Long
 
+Private Declare Function IsPwrSuspendAllowed Lib "powrprof.dll" () As Long
+Private Declare Function IsPwrHibernateAllowed Lib "powrprof.dll" () As Long
+
 Private Declare Function InitiateShutdown Lib "advapi32.dll" Alias "InitiateShutdownW" (ByVal lpMachineName As Long, ByVal lpMessage As Long, ByVal dwGracePeriod As Long, ByVal dwShutdownFlags As Long, ByVal dwReason As Long) As Long
 
 Public Sub ShutDownNow()
@@ -130,31 +133,7 @@ Private Function EnableShutdownPrivileges() As Boolean
   End If
 End Function
 
-Public Function IsRebootRequired() As Boolean
-  On Error Resume Next
-  Dim shell As Object
-  Set shell = CreateObject("WScript.Shell")
-  
-  If shell Is Nothing Then Exit Function
-  
-  Dim keys
-  keys = Array( _
-    "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending\", _
-    "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired\", _
-    "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\PendingFileRenameOperations", _
-    "HKLM\SOFTWARE\Microsoft\Updates\UpdateExeVolatile", _
-    "HKLM\SYSTEM\CurrentControlSet\Services\Netlogon\JoinDomain", _
-    "HKLM\SYSTEM\CurrentControlSet\Control\ComputerName\ActiveComputerName\ComputerName", _
-    "HKLM\SYSTEM\CurrentControlSet\Control\Windows\SystemRestore\RPRebootRequired" _
-  )
-  Dim i As Long
-  For i = 0 To UBound(keys)
-    Err.Clear
-    shell.RegRead keys(i)
-    If Err.Number = 0 Then
-      IsRebootRequired = True
-      Exit For
-    End If
-  Next
-  On Error GoTo 0
+Public Function CanHibernate() As Boolean
+  CanHibernate = CBool(IsPwrHibernateAllowed)
 End Function
+

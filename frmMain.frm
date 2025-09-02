@@ -114,6 +114,7 @@ Friend Sub SetForm()
   Me.Caption = APP_NAME
   LoadSettings
   ApplySettings
+  cmbShutdown.AllowHibernate = CanHibernate()
   If o_AlwaysOnTop = True Then Call optShutdown_AlwaysOnTopClick
   CheckReadyButton
   Me.Show
