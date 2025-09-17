@@ -119,7 +119,7 @@ Friend Sub SetForm()
   If o_AlwaysOnTop = True Then Call optShutdown_AlwaysOnTopClick
   CheckReadyButton
   optShutdown.UpdatesEnabled = IsWindowsVistaOrHigher()
-  If optShutdown.Enabled = False Then optShutdown.InstallUpdates = False
+  If optShutdown.UpdatesEnabled = False Then optShutdown.InstallUpdates = False
   Me.Show
 End Sub
 
