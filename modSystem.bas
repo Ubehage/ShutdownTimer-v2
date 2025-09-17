@@ -71,6 +71,17 @@ Public Type Circle_Pos
   Radius As Long
 End Type
 
+Public Type OSVERSIONINFO
+  dwOSVersionInfoSize As Long
+  dwMajorVersion As Long
+  dwMinorVersion As Long
+  dwBuildNumber As Long
+  dwPlatformId As Long
+  szCSDVersion As String * 256
+End Type
+
+Private Declare Function RtlGetVersion Lib "ntdll.dll" (lpVersionInformation As OSVERSIONINFO) As Long
+
 Private Declare Function SetWindowPos Lib "user32.dll" (ByVal hWnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, ByVal cX As Long, ByVal cY As Long, ByVal wFlags As Long) As Long
 Private Declare Sub InitCommonControls9x Lib "comctl32" Alias "InitCommonControls" ()
 Private Declare Function InitCommonControlsEx Lib "comctl32" (lpInitCtrls As tagINITCOMMONCONTROLSEX) As Boolean
@@ -114,4 +125,11 @@ Public Function IsPointInRect(pRect As RECT, pPoint As POINTAPI) As Boolean
       If (pPoint.Y >= .Top And pPoint.Y <= .Bottom) Then IsPointInRect = True
     End If
   End With
+End Function
+
+Public Function IsWindowsVistaOrHigher() As Boolean
+  Dim vInfo As OSVERSIONINFO
+  vInfo.dwOSVersionInfoSize = LenB(vInfo)
+  Call RtlGetVersion(vInfo)
+  IsWindowsVistaOrHigher = IIf(vInfo.dwMajorVersion >= 6, True, False)
 End Function

@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin VB.Form frmMain 
    BackColor       =   &H00202020&
-   BorderStyle     =   4  'Fixed ToolWindow
+   BorderStyle     =   3  'Fixed Dialog
    Caption         =   "ShutdownTimer2"
    ClientHeight    =   7710
    ClientLeft      =   45
@@ -13,6 +13,7 @@ Begin VB.Form frmMain
    MinButton       =   0   'False
    ScaleHeight     =   7710
    ScaleWidth      =   10860
+   ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows Default
    Begin ShutdownTimer2.StatusWindow wStatus 
       Height          =   1185
@@ -117,6 +118,8 @@ Friend Sub SetForm()
   cmbShutdown.AllowHibernate = CanHibernate()
   If o_AlwaysOnTop = True Then Call optShutdown_AlwaysOnTopClick
   CheckReadyButton
+  optShutdown.UpdatesEnabled = IsWindowsVistaOrHigher()
+  If optShutdown.Enabled = False Then optShutdown.InstallUpdates = False
   Me.Show
 End Sub
 

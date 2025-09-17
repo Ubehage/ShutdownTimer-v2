@@ -24,9 +24,9 @@ Begin VB.UserControl ShutdownOptions
       TabIndex        =   0
       Top             =   3420
       Width           =   3975
-      _extentx        =   7011
-      _extenty        =   529
-      caption         =   "Always keep this window on top"
+      _ExtentX        =   7011
+      _ExtentY        =   529
+      Caption         =   "Always keep this window on top"
    End
    Begin ShutdownTimer2.CheckBox chkUpdate 
       Height          =   300
@@ -34,9 +34,9 @@ Begin VB.UserControl ShutdownOptions
       TabIndex        =   1
       Top             =   2235
       Width           =   5655
-      _extentx        =   9975
-      _extenty        =   529
-      caption         =   "Install pending Windows updates if available"
+      _ExtentX        =   9975
+      _ExtentY        =   529
+      Caption         =   "Install pending Windows updates if available"
    End
    Begin ShutdownTimer2.CheckBox chkForce 
       Height          =   300
@@ -44,9 +44,9 @@ Begin VB.UserControl ShutdownOptions
       TabIndex        =   2
       Top             =   1005
       Width           =   5055
-      _extentx        =   2143
-      _extenty        =   529
-      caption         =   "Force running apps to close immediately"
+      _ExtentX        =   2143
+      _ExtentY        =   529
+      Caption         =   "Force running apps to close immediately"
    End
    Begin VB.Label lblWarning 
       AutoSize        =   -1  'True
@@ -108,6 +108,15 @@ End Property
 Public Property Get AlwaysOnTop() As Boolean
   AlwaysOnTop = (chkOnTop.Value = vbChecked)
 End Property
+Public Property Get ForceEnabled() As Boolean
+  ForceEnabled = chkForce.Enabled
+End Property
+Public Property Get UpdatesEnabled() As Boolean
+  UpdatesEnabled = chkUpdate.Enabled
+End Property
+Public Property Get OnTopEnabled() As Boolean
+  OnTopEnabled = chkOnTop.Enabled
+End Property
 Public Property Let Title(New_Title As String)
   If m_Title = New_Title Then Exit Property
   m_Title = New_Title
@@ -128,6 +137,15 @@ Public Property Let InstallUpdates(New_InstallUpdates As Boolean)
 End Property
 Public Property Let AlwaysOnTop(New_AlwaysOnTop As Boolean)
   chkOnTop.Value = IIf(New_AlwaysOnTop, vbChecked, vbUnchecked)
+End Property
+Public Property Let ForceEnabled(New_ForceEnabled As Boolean)
+  chkForce.Enabled = New_ForceEnabled
+End Property
+Public Property Let UpdatesEnabled(New_UpdatesEnabled As Boolean)
+  chkUpdate.Enabled = New_UpdatesEnabled
+End Property
+Public Property Let OnTopEnabled(New_OnTopEnabled As Boolean)
+  chkOnTop.Enabled = New_OnTopEnabled
 End Property
 
 Public Sub Refresh(Optional RedrawAll As Boolean = False)
