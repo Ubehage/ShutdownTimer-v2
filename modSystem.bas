@@ -77,7 +77,7 @@ Public Type OSVERSIONINFO
   dwMinorVersion As Long
   dwBuildNumber As Long
   dwPlatformId As Long
-  szCSDVersion As String * 256
+  szCSDVersion(0 To 127) As Byte
 End Type
 
 Private Declare Function RtlGetVersion Lib "ntdll.dll" (lpVersionInformation As OSVERSIONINFO) As Long
