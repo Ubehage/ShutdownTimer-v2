@@ -63,6 +63,7 @@ Public Property Let Value(New_Value As CheckBoxConstants)
   m_Value = New_Value
   UserControl.PropertyChanged PROPNAME_VALUE
   Refresh
+  RaiseEvent Click
 End Property
 Public Property Let Caption(New_Caption As String)
   If m_Caption = New_Caption Then Exit Property
